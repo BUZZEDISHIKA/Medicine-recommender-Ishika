@@ -1,0 +1,61 @@
+:root {
+    --background-color: #fff;
+    --text-color: #000;
+    --primary-color: #007bff;
+    --navbar-bg-color: #343a40;
+    --footer-bg-color: black;
+}
+
+body.light-mode {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --navbar-bg-color: #f8f9fa;
+    --footer-bg-color: #f1f1f1;
+}
+
+body.dark-mode {
+    --background-color: #121212;
+    --text-color: #f0f0f0;
+    --navbar-bg-color: #343a40;
+    --footer-bg-color: #000000;
+}
+
+body.contrast-mode {
+    --background-color: #000000;
+    --text-color: #ffcc00;
+    --navbar-bg-color: #000;
+    --footer-bg-color: #000;
+}
+
+/* Apply variables */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.navbar {
+    background-color: var(--navbar-bg-color) !important;
+}
+
+footer {
+    background-color: var(--footer-bg-color);
+}
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+#radiusValue {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.card {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+

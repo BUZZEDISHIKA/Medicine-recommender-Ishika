@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HealthcareFirst Online Ishika Bagchi</title>
+    
+    <!-- External resources -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="theme.css">
+
+    <style>
+        footer {
+    background: black;
+    color: white;
+    padding: 9px 20px;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+
+}
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            color: black;
+            margin-top: 0;
+            margin-left: 2px;
+        }
+        .myimg {
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            border-radius: 25px;
+        }
+        @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      h1, p, button {
+        animation: fadeIn 1.5s ease-in-out;
+      }
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #000000;
+        --button-bg-color: #007bff;
+        --button-text-color: #ffffff;
+        --navbar-bg: #343a40;
+        --modal-header-bg: #343a40;
+        --modal-body-color: #f8f9fa;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+      }
+
+      .btn {
+        background-color: var(--button-bg-color);
+        color: var(--button-text-color);
+      }
+
+      .navbar {
+        background-color: var(--navbar-bg);
+      }
+
+      .modal-header {
+        background-color: var(--modal-header-bg);
+      }
+
+      .modal-body {
+        background-color: var(--modal-body-color);
+      }
+
+      /* High Contrast Mode */
+      .high-contrast-mode {
+        --bg-color: #000000;
+        --text-color: #eaf1ed;
+        --button-bg-color: #ff0000;
+        --button-text-color: #ffffff;
+        --navbar-bg: #000000;
+        --modal-header-bg: #000000;
+        --modal-body-color: #26aa1af2;
+      }
+
+      /* Dark Mode */
+      .dark-mode {
+        --bg-color: #121212;
+        --text-color: #ffffff;
+        --button-bg-color: #333333;
+        --button-text-color: #ffffff;
+        --navbar-bg: #1c1c1c;
+        --modal-header-bg: #1c1c1c;
+        --modal-body-color: #2c2c2c;
+      }
+
+      /* Dracula Theme */
+      .dracula-mode {
+        --bg-color: #282a36;
+        --text-color: #f8f8f2;
+        --button-bg-color: #6272a4;
+        --button-text-color: #f8f8f2;
+        --navbar-bg: #44475a;
+        --modal-header-bg: #44475a;
+        --modal-body-color: #44475a;
+      }
+
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <!-- Logo at the top-left corner -->
+        <div class="logo">
+          <img class="myimg" src="{{ url_for('static', filename='img.png') }}" alt="">
+        </div>
+
+        <a class="navbar-brand" href="#">T.D.B College</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <div class="theme-switcher">
+                <button id="default-mode" class="btn btn-light">🌞 Default Mode</button>
+                <button id="dark-mode" class="btn btn-dark">🌜 Dark Mode</button>
+                <button id="contrast-mode" class="btn btn-warning">⚫ Contrast Mode</button>
+                <button id="dracula-mode" class="btn btn-primary">🧛 Dracula Mode</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  <!-- Main Form -->
+  <h1 class="mt-4 my-4 text-center">HealthFirst Online</h1>
+  <div class="container my-4 mt-4" style="background: rgb(36, 34, 34); color: rgb(249, 245, 245); border-radius: 15px; padding: 40px;">
+    <form action="/predict" method="post">
+      <div class="form-group">
+        <label for="symptoms">Select Symptoms:</label>
+        <input type="text" class="form-control" id="symptoms" name="symptoms" placeholder="Type symptoms such as itching, sleeping, aching, etc">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-danger btn-lg" style="width: 100%; padding: 14px; margin-bottom: 5px;">Predict</button>
+      <div name="mysysms" id="transcription"></div>
+
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        <br>
+
+    </form>
+  </div>
+
+  <!-- Results Modals (If Any) -->
+  {% if predicted_disease %}
+
+  <!-- Results -->
+  <h1 class="text-center my-4 mt-4">Our AI System Results</h1>
+  <div class="container">
+  
+      <div class="result-container">
+          <!-- Buttons to toggle display -->
+          <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal" style="padding:4px;  margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F39334;color:black;">Disease</button>
+          <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#268AF3 ;color:black;">Description</button>
+          <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F371F9 ;color:black;">Precaution</button>
+          <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px;border-radius:5px; background:#F8576F ;color:black;">Medications</button>
+          <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#99F741 ;color:black;">Workouts</button>
+          <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#E5E23D;color:black;">Diets</button>
+      </div>
+  </div>
+  
+  {% endif %}
+  
+  <!-- Disease Modal -->
+      <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #020606; color:white;"> <!-- Set header background color inline -->
+                      <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body" style="background-color: #modal-body-color;"> 
+                      <!-- Set modal body background color inline -->
+                      <p>{{ predicted_disease }}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+  
+      <!-- Description Modal -->
+      <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #020606; color:white;">
+                      <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <p>{{ dis_des }}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+  <!-- Precaution Modal -->
+      <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #020606; color:white;">
+                      <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <ul>
+                          {% for i in my_precautions %}
+                              <li>{{ i }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+  
+  
+  
+      <!-- Medications Modal -->
+      <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #020606; color:white;">
+                      <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <ul>
+                          {% for i in medications %}
+                              <li>{{ i }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+      <!-- Workouts Modal -->
+      <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+          <div class="modal-dialog" >
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #020606; color:white;">
+                      <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <ul>
+                          {% for i in workout %}
+                              <li>{{ i }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+      <!-- Diets Modal -->
+      <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #020606; color:white;">
+                      <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <ul>
+                          {% for i in my_diet %}
+                              <li>{{ i }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  <!-- Doctor Finder Section -->
+<div class="container my-5">
+  <h2 class="text-center">Find Doctors Near You</h2>
+  <p class="text-center text-muted">Allow location access to see nearby clinics.</p>
+  
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="form-group mb-3">
+        <label for="specialty">Select Doctor Specialty:</label>
+        <select class="form-control" id="specialty">
+          <option value="general practitioner">General Practitioner</option>
+          <option value="cardiologist">Cardiologist</option>
+          <option value="dermatologist">Dermatologist</option>
+          <option value="neurologist">Neurologist</option>
+          <option value="orthopedic">Orthopedic</option>
+          <option value="pediatrician">Pediatrician</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="radius">Search Radius (km):</label>
+        <input type="range" class="form-range" id="radius" min="1" max="50" value="10">
+        <span id="radiusValue">10 km</span>
+      </div>
+      <button class="btn btn-primary w-100" id="findDoctorsBtn">Find Doctors</button>
+    </div>
+    
+    <div class="col-md-8">
+      <div id="map" style="height: 400px; border-radius: 10px; border: 2px solid #ddd;"></div>
+    </div>
+  </div>
+
+  <div id="doctorsList" class="mt-4"></div>
+</div>
+
+<!-- Load Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
+  <!-- Footer -->
+  <footer>
+    <div class="center">Copyright &copy; www.bagchiishika@gmail.com All rights reserved!</div>
+  </footer>
+
+  <!-- JavaScript for Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Theme Switcher JavaScript -->
+   <!-- JavaScript for Theme Switching -->
+   <script>
+    document.getElementById('default-mode').addEventListener('click', function() {
+      document.body.classList.remove('dark-mode', 'high-contrast-mode', 'dracula-mode');
+    });
+
+    document.getElementById('dark-mode').addEventListener('click', function() {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('high-contrast-mode', 'dracula-mode');
+    });
+
+    document.getElementById('contrast-mode').addEventListener('click', function() {
+      document.body.classList.add('high-contrast-mode');
+      document.body.classList.remove('dark-mode', 'dracula-mode');
+    });
+    document.getElementById('dracula-mode').addEventListener('click', function() {
+        document.body.classList.add('dracula-mode');
+        document.body.classList.remove('dark-mode', 'high-contrast-mode');
+      });
+    </script>
+</body>
+</html>
